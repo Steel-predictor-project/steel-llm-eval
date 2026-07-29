@@ -1,0 +1,9 @@
+model,edge_retention_n,edge_retention_spearman,edge_retention_kendall,edge_retention_pairwise,edge_retention_norm_mae,toughness_n,toughness_spearman,toughness_kendall,toughness_pairwise,toughness_norm_mae,mean_spearman
+steel-predictor (reference ML),48,0.992,0.952,0.98,0.211,12,0.946,0.87,0.938,2.716,0.969
+anthropic/claude-sonnet-5,48,0.894,0.781,0.918,2.778,12,0.844,0.721,0.881,2.258,0.869
+google/gemini-3.6-flash,48,0.918,0.797,0.913,1.903,12,0.698,0.585,0.797,2.174,0.808
+openai/gpt-4o,48,0.868,0.738,0.907,3.799,12,0.6,0.465,0.746,2.758,0.734
+meta-llama/llama-3.3-70b-instruct,47,0.864,0.725,0.964,4.379,12,0.514,0.442,0.78,3.508,0.689
+deepseek/deepseek-chat-v3.1,48,0.869,0.744,0.91,3.778,12,0.38,0.304,0.661,2.186,0.625
+openai/gpt-4o-mini,48,0.85,0.715,0.984,4.82,12,0.385,0.312,0.689,3.758,0.617
+baseline-constant,48,,,,2.462,12,,,,2.932,

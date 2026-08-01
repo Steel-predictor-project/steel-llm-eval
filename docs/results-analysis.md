@@ -2,6 +2,8 @@
 
 Full numbers in [`results/scores.csv`](../results/scores.csv); per-steel model outputs in [`results/raw_*.csv`](../results/). Figures are in [`docs/assets/`](assets/).
 
+> Edge-retention ground truth: Larrin Thomas, [*Testing the Edge Retention of 48 Knife Steels*](https://knifesteelnerds.com/2020/05/01/testing-the-edge-retention-of-48-knife-steels/) (KnifeSteelNerds, 2020). Charpy toughness: Crucible Industries datasheets. See [methodology](methodology.md#2-the-dataset) for full attribution.
+
 ## Overall leaderboard
 
 ![Mean Spearman leaderboard](assets/leaderboard_mean.png)

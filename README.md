@@ -79,8 +79,14 @@ Raw per-steel responses are written to `results/raw_<model>.csv`; scores to `res
 - **Small toughness set (n=12).** Treat toughness ρ as indicative, not definitive; single sample per steel at temperature 0 (no self-consistency / multi-sample averaging yet).
 - **Rank metrics are primary** precisely because different models calibrate the 1–10 scale differently; ranking is what's comparable and decision-relevant.
 
-## Data & provenance
-The benchmark (`data/benchmark.csv`) is derived from the processed dataset of the [Steel-predictor](https://github.com/Steel-predictor-project/Steel-predictor) project; every underlying source (manufacturer datasheets, published CATRA/Charpy measurements) is cited in that repo's `DATA_SOURCES.md`. Underlying factual measurements remain the property of their original publishers.
+## Data sources & attribution
+The benchmark (`data/benchmark.csv`) is derived from the processed dataset of the [Steel-predictor](https://github.com/Steel-predictor-project/Steel-predictor) project. The two ground-truth measurements come from:
+
+- **Edge retention (CATRA, 48 steels)** — Larrin Thomas, *"Testing the Edge Retention of 48 Knife Steels"* (2020), [KnifeSteelNerds.com](https://knifesteelnerds.com/2020/05/01/testing-the-edge-retention-of-48-knife-steels/). This benchmark's entire edge-retention ground truth is built on Larrin Thomas's published CATRA measurements — full credit to him.
+- **Toughness (Charpy, 12 steels)** — [Crucible Industries](https://www.crucible.com/) published datasheets (CPM series).
+- **Compositions & test hardness** — manufacturer datasheets (Crucible, Böhler-Uddeholm/voestalpine, Carpenter, Alleima, Hitachi/Proterial) plus published literature.
+
+Every individual source is enumerated with links in the Steel-predictor repo's [`DATA_SOURCES.md`](https://github.com/Steel-predictor-project/Steel-predictor/blob/main/DATA_SOURCES.md). Underlying factual measurements remain the property of their original publishers; this repo redistributes only its own normalized compilation and derived features.
 
 ## License
 Code: **Apache-2.0** (`LICENSE`). Curated benchmark data + reference model outputs: **CC BY 4.0** (`data/LICENSE`), covering only this project's compilation/derived features. Attribution requested: "Steel Property Predictor Project" with a link to this repo.

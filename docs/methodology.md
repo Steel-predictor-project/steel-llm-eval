@@ -20,7 +20,14 @@ We deliberately restrict ground truth to *measured* quantities. No subjective 1â
 | Edge retention | CATRA total cards cut (TCC) | mm | 48 |
 | Toughness | Charpy unnotched impact energy | ft-lbs | 12 |
 
-Each row carries the composition (C, Cr, V, Mo, W, Co, N, Mn, Si, Nb, Ni), a `powder_metallurgy` flag, and `catra_test_hrc` (hardness at test) where known. Every underlying source is cited in the Steel-predictor repo's `DATA_SOURCES.md`; the underlying factual measurements remain the property of their original publishers.
+Each row carries the composition (C, Cr, V, Mo, W, Co, N, Mn, Si, Nb, Ni), a `powder_metallurgy` flag, and `catra_test_hrc` (hardness at test) where known.
+
+**Attribution.** The ground-truth measurements are not ours:
+- **Edge retention (CATRA, 48 steels)** comes from Larrin Thomas, *"Testing the Edge Retention of 48 Knife Steels"* (2020), [KnifeSteelNerds.com](https://knifesteelnerds.com/2020/05/01/testing-the-edge-retention-of-48-knife-steels/). This benchmark's edge-retention ground truth is entirely his published CATRA data â€” full credit to him.
+- **Toughness (Charpy, 12 steels)** comes from [Crucible Industries](https://www.crucible.com/) datasheets.
+- **Compositions/hardness** come from manufacturer datasheets and literature.
+
+Every underlying source is enumerated in the Steel-predictor repo's [`DATA_SOURCES.md`](https://github.com/Steel-predictor-project/Steel-predictor/blob/main/DATA_SOURCES.md); the underlying factual measurements remain the property of their original publishers.
 
 ## 3. The task given to each model
 

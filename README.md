@@ -12,6 +12,8 @@ Scoring is **scale-free** (rank correlation + pairwise ranking accuracy), so a m
 [![Code License: Apache 2.0](https://img.shields.io/badge/code-Apache%202.0-blue.svg)](LICENSE)
 [![Data License: CC BY 4.0](https://img.shields.io/badge/data%20%26%20model-CC%20BY%204.0-lightgrey.svg)](data/LICENSE)
 
+**📊 Site with charts & analysis:** https://steel-predictor-project.github.io/steel-llm-eval/ · **Docs:** [methodology](docs/methodology.md) · [results & analysis](docs/results-analysis.md)
+
 ---
 
 ## Leaderboard

@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Can LLMs Predict Steel Properties? — steel-llm-eval</title>
+<meta name="description" content="An open benchmark measuring how well large language models predict knife-steel properties (edge retention, toughness) from chemical composition, scored against CATRA and Charpy laboratory measurements.">
+<style>
+  :root{
+    --bg:#12121e; --panel:#1a1a2e; --panel2:#20203a; --text:#e8e8f0;
+    --muted:#a0a0b5; --accent:#e94560; --blue:#4f8bd4; --border:#2c2c44;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--text);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    line-height:1.65;}
+  .wrap{max-width:900px;margin:0 auto;padding:0 20px;}
+  header{padding:64px 0 40px;text-align:center;border-bottom:1px solid var(--border);}
+  h1{font-size:2.3rem;margin:0 0 .4rem;line-height:1.2;}
+  .tagline{color:var(--muted);font-size:1.15rem;max-width:640px;margin:0 auto;}
+  .badges{margin-top:1.2rem;display:flex;gap:.5rem;justify-content:center;flex-wrap:wrap;}
+  .badge{background:var(--panel2);border:1px solid var(--border);border-radius:999px;
+    padding:.28rem .8rem;font-size:.8rem;color:var(--muted);}
+  .badge--accent{background:var(--accent);color:#fff;border-color:var(--accent);}
+  .cta{display:inline-block;margin-top:1.4rem;background:var(--accent);color:#fff;
+    text-decoration:none;padding:.7rem 1.4rem;border-radius:8px;font-weight:600;}
+  .cta.secondary{background:transparent;border:1px solid var(--border);color:var(--text);margin-left:.5rem;}
+  section{padding:40px 0;border-bottom:1px solid var(--border);}
+  h2{font-size:1.6rem;margin:0 0 .8rem;}
+  h3{color:var(--blue);margin:1.6rem 0 .4rem;}
+  p{color:#d5d5e2;}
+  a{color:var(--accent);}
+  .lead{font-size:1.08rem;}
+  code{background:var(--panel2);padding:.12rem .4rem;border-radius:4px;font-size:.9em;}
+  pre{background:var(--panel);border:1px solid var(--border);border-radius:8px;
+    padding:1rem;overflow:auto;}
+  pre code{background:none;padding:0;}
+  figure{margin:1.4rem 0;}
+  figure img{width:100%;border-radius:10px;border:1px solid var(--border);background:#fff;}
+  figcaption{color:var(--muted);font-size:.85rem;text-align:center;margin-top:.5rem;}
+  table{width:100%;border-collapse:collapse;margin:1rem 0;font-size:.9rem;}
+  th,td{padding:.55rem .5rem;border-bottom:1px solid var(--border);text-align:right;}
+  th:first-child,td:first-child{text-align:left;}
+  thead th{color:var(--muted);font-weight:600;}
+  tr.ref td{color:var(--accent);}
+  .note{background:var(--panel);border-left:3px solid var(--accent);padding:.9rem 1.1rem;
+    border-radius:0 8px 8px 0;color:#d5d5e2;font-size:.95rem;}
+  .grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem;}
+  @media(max-width:640px){.grid{grid-template-columns:1fr}h1{font-size:1.8rem}}
+  footer{padding:40px 0 60px;text-align:center;color:var(--muted);font-size:.9rem;}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <h1>Can LLMs predict steel properties<br>from chemical composition?</h1>
+    <p class="tagline">An open benchmark scoring large language models against real
+      CATRA and Charpy laboratory measurements of knife-steel performance.</p>
+    <div class="badges">
+      <span class="badge badge--accent">7 models</span>
+      <span class="badge">51 steels</span>
+      <span class="badge">objective lab ground truth</span>
+      <span class="badge">Apache-2.0 + CC BY 4.0</span>
+    </div>
+    <div>
+      <a class="cta" href="https://github.com/Steel-predictor-project/steel-llm-eval">View on GitHub</a>
+      <a class="cta secondary" href="https://github.com/Steel-predictor-project/steel-llm-eval/blob/main/docs/methodology.md">Methodology</a>
+    </div>
+  </header>
+
+  <section>
+    <h2>The setup</h2>
+    <p class="lead">We give a model <strong>only a steel's chemistry</strong>
+      (e.g. <code>C=1.9%, Cr=20%, V=4%, powder-metallurgy: yes</code>) and ask it to
+      rate two properties on a 1–10 scale. We then score those ratings against
+      <strong>objective measurements</strong> — never subjective opinion:</p>
+    <div class="grid">
+      <div>
+        <h3>Edge retention</h3>
+        <p>Ground truth: <strong>CATRA</strong> standardized machine-cutting test
+          (total card stock cut, mm). <strong>48 steels.</strong></p>
+      </div>
+      <div>
+        <h3>Toughness</h3>
+        <p>Ground truth: <strong>Charpy</strong> impact energy (ft-lbs).
+          <strong>12 steels.</strong></p>
+      </div>
+    </div>
+    <p>Scoring is <strong>scale-free</strong> (Spearman rank correlation + pairwise
+      ranking accuracy), so a model is judged only on whether it <em>orders steels
+      correctly</em> — the decision-relevant question — not on how it calibrates 1–10.
+      Zero-shot, temperature 0, one sample per steel, identical prompt for every model.</p>
+  </section>
+
+  <section>
+    <h2>Leaderboard</h2>
+    <figure>
+      <img src="assets/leaderboard_mean.png" alt="Mean Spearman leaderboard">
+    </figure>
+    <table>
+      <thead><tr><th>Model</th><th>Edge&nbsp;ρ</th><th>Tough&nbsp;ρ</th><th>Mean&nbsp;ρ</th></tr></thead>
+      <tbody>
+        <tr class="ref"><td>steel-predictor (reference ML) †</td><td>0.992</td><td>0.946</td><td><strong>0.969</strong></td></tr>
+        <tr><td>anthropic/claude-sonnet-5</td><td>0.894</td><td>0.844</td><td><strong>0.869</strong></td></tr>
+        <tr><td>google/gemini-3.6-flash</td><td>0.918</td><td>0.698</td><td><strong>0.808</strong></td></tr>
+        <tr><td>openai/gpt-4o</td><td>0.868</td><td>0.600</td><td><strong>0.734</strong></td></tr>
+        <tr><td>meta-llama/llama-3.3-70b-instruct</td><td>0.864</td><td>0.514</td><td><strong>0.689</strong></td></tr>
+        <tr><td>deepseek/deepseek-chat-v3.1</td><td>0.869</td><td>0.380</td><td><strong>0.625</strong></td></tr>
+        <tr><td>openai/gpt-4o-mini</td><td>0.850</td><td>0.385</td><td><strong>0.617</strong></td></tr>
+      </tbody>
+    </table>
+    <div class="note">
+      <strong>† Fairness caveat.</strong> The reference ML model was <em>trained</em> on
+      these same CATRA/Charpy measurements, so its scores here are largely
+      <strong>in-sample</strong> and shown as an upper-reference bar — <strong>not</strong>
+      a fair head-to-head with the zero-shot LLMs. Its honest out-of-sample figure is its
+      LOOCV MAE (0.391), reported in the
+      <a href="https://github.com/Steel-predictor-project/Steel-predictor">Steel-predictor</a> repo.
+    </div>
+  </section>
+
+  <section>
+    <h2>Finding 1 — edge retention is easy, toughness is hard</h2>
+    <figure>
+      <img src="assets/edge_vs_tough_bars.png" alt="Edge vs toughness per model">
+      <figcaption>Every model predicts edge retention far better than toughness.</figcaption>
+    </figure>
+    <p>Wear resistance is close to a function of composition — it's dominated by hard
+      carbide volume, which is set by carbide-forming elements (C, V, Cr, W, Mo). That
+      relationship is legible and heavily documented, exactly what an LLM can internalize.</p>
+    <p><strong>Toughness is a competition, not a sum.</strong> It depends on carbide size
+      and distribution, powder-metallurgy processing, retained austenite, and the hardness
+      the steel is run at — factors a bare composition string underdetermines. High carbon
+      and vanadium <em>raise</em> wear resistance while <em>lowering</em> toughness, so naive
+      "more alloy = better" reasoning breaks down.</p>
+    <figure>
+      <img src="assets/edge_tough_map.png" alt="Edge vs toughness map">
+      <figcaption>Every point sits below the diagonal — universally better at edge retention.</figcaption>
+    </figure>
+  </section>
+
+  <section>
+    <h2>Finding 2 — frontier models separate on the hard task</h2>
+    <p>On edge retention the field is bunched (ρ 0.85–0.92); even a small model orders
+      steels well. The separation appears on <strong>toughness</strong>, where
+      <code>claude-sonnet-5</code> (0.844) and <code>gemini-3.6-flash</code> (0.698) pull
+      clear of <code>gpt-4o-mini</code> and <code>deepseek-chat-v3.1</code> (both ≈0.38).
+      Toughness is the discriminating task.</p>
+  </section>
+
+  <section>
+    <h2>Finding 3 — the best LLM tracks the measurements</h2>
+    <div class="grid">
+      <figure><img src="assets/scatter_edge_claude.png" alt="Claude edge scatter"></figure>
+      <figure><img src="assets/scatter_tough_claude.png" alt="Claude toughness scatter"></figure>
+    </div>
+    <p>For Claude Sonnet, predicted scores rise monotonically with the measured values on
+      both properties. The toughness scatter also exposes the failure mode: several genuinely
+      tough steels get compressed into low scores because the model hedges toward the middle
+      when chemistry alone is ambiguous.</p>
+  </section>
+
+  <section>
+    <h2>What this does and doesn't show</h2>
+    <p><strong>It does</strong> show modern LLMs carry a real, quantifiable amount of materials
+      knowledge — enough to rank wear resistance about as well as a purpose-built model, from
+      composition alone.</p>
+    <p><strong>It doesn't</strong> show LLMs can replace a measured model or lab testing:
+      toughness ordering is unreliable, magnitudes aren't calibrated, and none of this accounts
+      for heat treatment or geometry. See the
+      <a href="https://github.com/Steel-predictor-project/steel-llm-eval/blob/main/docs/methodology.md">methodology</a> for the full limitations.</p>
+  </section>
+
+  <section>
+    <h2>Reproduce it</h2>
+    <pre><code>git clone https://github.com/Steel-predictor-project/steel-llm-eval.git
+cd steel-llm-eval
+export OPENROUTER_API_KEY=...      # one key → many providers
+./run_benchmark.sh                 # run all models + rebuild the leaderboard
+python harness/generate_charts.py  # regenerate these figures</code></pre>
+    <p>Raw per-steel model responses are committed under <code>results/</code>. Full method:
+      <a href="https://github.com/Steel-predictor-project/steel-llm-eval/blob/main/docs/methodology.md">methodology</a> · <a href="https://github.com/Steel-predictor-project/steel-llm-eval/blob/main/docs/results-analysis.md">results &amp; analysis</a>.</p>
+  </section>
+
+  <footer>
+    <p>Part of the <a href="https://github.com/Steel-predictor-project">Steel Property Predictor Project</a> ·
+      <a href="https://github.com/Steel-predictor-project/Steel-predictor">Steel-predictor model</a> ·
+      Code Apache-2.0, data CC BY 4.0.</p>
+    <p>An open-source research project.</p>
+  </footer>
+
+</div>
+</body>
+</html>

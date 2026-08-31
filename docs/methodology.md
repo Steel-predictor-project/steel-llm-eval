@@ -49,7 +49,7 @@ Because different models calibrate the 1–10 scale differently, the **headline 
 
 - **Spearman ρ** — rank correlation between predicted score and measured value. `1.0` = perfect ordering, `0.0` = random. *(primary)*
 - **Kendall τ-b** — a second rank-correlation view. *(reported in `scores.csv`)*
-- **Pairwise accuracy** — over all pairs of steels, the fraction ordered the same way as the measurement (ties excluded). Intuitive and robust for small n. *(primary)*
+- **Pairwise accuracy** — over all pairs of steels, the fraction ordered the same way as the measurement (ties excluded). Easy to read, and it still means something with only a dozen steels. *(primary)*
 - **Normalized MAE** — after min-max scaling the measurement to 1–10, the mean absolute error vs. the predicted score. A calibration sanity check. *(secondary — sensitive to how a model uses the scale)*
 
 ## 5. Baselines
